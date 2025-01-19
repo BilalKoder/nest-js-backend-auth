@@ -2,10 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
-  Get,
   Post,
-  Request,
-  UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { RegisterRequestDto } from './dtos/register-request.dto';
@@ -13,8 +10,6 @@ import { LoginResponseDTO } from './dtos/login-response.dto';
 import { RegisterResponseDTO } from './dtos/register-response.dto';
 import { Public } from './decorators/public.decorator';
 import { LoginRequestDto } from './dtos/login-request.dto';
-import { ApiAuthPermission } from './decorators/auth.decorator';
-import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('auth')
 export class AuthController {
