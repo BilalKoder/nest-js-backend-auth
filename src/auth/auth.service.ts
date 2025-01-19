@@ -6,6 +6,7 @@ import { AccessToken } from './types/AccessToken';
 import { UsersService } from 'src/users/users.service';
 import { RegisterRequestDto } from './dtos/register-request.dto';
 import { LoginRequestDto } from './dtos/login-request.dto';
+import { createResponse } from 'src/utils/response.util';
 
 @Injectable()
 export class AuthService {
@@ -31,12 +32,11 @@ export class AuthService {
     const user = await this.validateUser(loginRequestDto.email, loginRequestDto.password)
     const payload = { id: user.id, email: user.email };
     const token = this.jwtService.sign({ ...payload });
-    return { 
-        data: {
-          access_token: token 
-        },
-        status : 200
-      };
+    return createResponse(
+      { access_token: token }, 
+      'User Logged in successfully', 
+      200
+    );
   }
 
   async register(user: RegisterRequestDto): Promise<AccessToken> {
@@ -49,11 +49,10 @@ export class AuthService {
     const recentCreatedUser = await this.usersService.create(newUser);
     const payload = { id: recentCreatedUser.id, email: recentCreatedUser.email };
     const token = this.jwtService.sign({ ...payload });
-    return { 
-      data: {
-        access_token: token 
-      },
-      status : 200
-    };
+    return createResponse(
+      { access_token: token }, 
+      'User registered successfully', 
+      200
+    );
   }
 }
